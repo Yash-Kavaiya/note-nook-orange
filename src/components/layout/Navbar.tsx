@@ -87,7 +87,7 @@ export const Navbar = () => {
           ) : (
             <>
               <LoginModal>
-                <Button variant="outlineHero">Log in</Button>
+                <Button variant="outlineHero" className="text-inverted">Log in</Button>
               </LoginModal>
               <LoginModal>
                 <Button variant="hero">Sign up</Button>
@@ -133,7 +133,7 @@ export const Navbar = () => {
                   ) : (
                     <div className="flex gap-3">
                       <LoginModal>
-                        <Button variant="outlineHero" className="w-full">Log in</Button>
+                        <Button variant="outlineHero" className="w-full text-inverted">Log in</Button>
                       </LoginModal>
                       <LoginModal>
                         <Button variant="hero" className="w-full">Sign up</Button>
