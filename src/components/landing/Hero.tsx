@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import heroImage from "@/assets/hero-students.jpg";
+import { Link } from "react-router-dom";
 
 const Hero = () => {
   return (
@@ -19,8 +20,8 @@ const Hero = () => {
             Upload your notes, filter by subject & college, and download what you need.
           </p>
           <div className="mt-6 flex flex-col sm:flex-row items-center gap-3">
-            <Button variant="hero" size="lg">Get Started</Button>
-            <Button variant="outlineHero" size="lg">Browse Notes</Button>
+            <Button asChild variant="hero" size="lg"><Link to="/upload">Get Started</Link></Button>
+            <Button asChild variant="outlineHero" size="lg"><Link to="/browse">Browse Notes</Link></Button>
           </div>
         </div>
       </div>

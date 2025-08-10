@@ -3,12 +3,13 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Link, NavLink } from "react-router-dom";
 
 const navItems = [
-  { label: "Home", href: "#top" },
-  { label: "Browse Notes", href: "#features" },
-  { label: "Testimonials", href: "#testimonials" },
-  { label: "Get Started", href: "#cta" },
+  { label: "Home", to: "/" },
+  { label: "Browse Notes", to: "/browse" },
+  { label: "Upload Notes", to: "/upload" },
+  { label: "Download Notes", to: "/download" },
 ];
 
 export const Navbar = () => {
@@ -17,20 +18,23 @@ export const Navbar = () => {
   return (
     <header id="top" className="sticky top-0 z-50 border-b bg-hero-gradient">
       <nav className="container mx-auto flex h-16 items-center justify-between gap-4">
-        <a href="#top" className="flex items-center gap-2">
+        <Link to="/" className="flex items-center gap-2">
           <BookOpen className="h-6 w-6 text-inverted" aria-hidden />
           <span className="font-heading text-lg font-semibold text-inverted">NoteNook</span>
-        </a>
+        </Link>
 
         <div className="hidden md:flex items-center gap-6">
           {navItems.map((item) => (
-            <a
+            <NavLink
               key={item.label}
-              href={item.href}
-              className="story-link text-inverted/90 hover:text-inverted"
+              to={item.to}
+              className={({ isActive }) =>
+                `story-link ${isActive ? "text-inverted" : "text-inverted/90 hover:text-inverted"}`
+              }
+              end
             >
               {item.label}
-            </a>
+            </NavLink>
           ))}
         </div>
 
@@ -57,14 +61,17 @@ export const Navbar = () => {
             <SheetContent side="right" className="bg-background">
               <div className="mt-8 flex flex-col gap-4">
                 {navItems.map((item) => (
-                  <a
+                  <NavLink
                     key={item.label}
-                    href={item.href}
+                    to={item.to}
                     onClick={() => setOpen(false)}
-                    className="text-foreground hover:text-primary"
+                    className={({ isActive }) =>
+                      `text-foreground hover:text-primary ${isActive ? 'font-medium' : ''}`
+                    }
+                    end
                   >
                     {item.label}
-                  </a>
+                  </NavLink>
                 ))}
                 <div className="mt-4 flex gap-3">
                   <Button variant="outlineHero" className="w-full">Log in</Button>

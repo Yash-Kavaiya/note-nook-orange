@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 const CTASection = () => {
   return (
@@ -9,8 +10,8 @@ const CTASection = () => {
           <p className="mb-6 text-inverted/90">Join NoteNook and help students everywhere by uploading your notes.
           </p>
           <div className="flex justify-center gap-3">
-            <Button variant="hero" size="lg">Upload Notes</Button>
-            <Button variant="outlineHero" size="lg">Browse Notes</Button>
+            <Button asChild variant="hero" size="lg"><Link to="/upload">Upload Notes</Link></Button>
+            <Button asChild variant="outlineHero" size="lg"><Link to="/browse">Browse Notes</Link></Button>
           </div>
         </div>
       </div>
