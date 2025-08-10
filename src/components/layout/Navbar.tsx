@@ -1,19 +1,33 @@
-import { BookOpen, Menu, Search } from "lucide-react";
+import { BookOpen, Menu, Search, User, LogOut } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Link, NavLink } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
+import { LoginModal } from "@/components/auth/LoginModal";
 
 const navItems = [
   { label: "Home", to: "/" },
   { label: "Browse Notes", to: "/browse" },
   { label: "Upload Notes", to: "/upload" },
   { label: "Download Notes", to: "/download" },
+  { label: "About Us", to: "/about" },
+  { label: "Contact Us", to: "/contact" },
 ];
 
 export const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const { currentUser, logout } = useAuth();
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+    } catch (error) {
+      console.error('Logout error:', error);
+    }
+  };
 
   return (
     <header id="top" className="sticky top-0 z-50 border-b bg-hero-gradient">
@@ -47,8 +61,39 @@ export const Navbar = () => {
               className="pl-9 bg-card text-foreground placeholder:text-muted-foreground/70"
             />
           </div>
-          <Button variant="outlineHero" className="">Log in</Button>
-          <Button variant="hero">Sign up</Button>
+          
+          {currentUser ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outlineHero" size="sm" className="flex items-center gap-2">
+                  <User className="h-4 w-4" />
+                  {currentUser.displayName || currentUser.email?.split('@')[0]}
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-48">
+                <DropdownMenuItem disabled>
+                  <div className="flex flex-col">
+                    <span className="font-medium">{currentUser.displayName || 'User'}</span>
+                    <span className="text-xs text-muted-foreground">{currentUser.email}</span>
+                  </div>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={handleLogout}>
+                  <LogOut className="mr-2 h-4 w-4" />
+                  Sign Out
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <>
+              <LoginModal>
+                <Button variant="outlineHero">Log in</Button>
+              </LoginModal>
+              <LoginModal>
+                <Button variant="hero">Sign up</Button>
+              </LoginModal>
+            </>
+          )}
         </div>
 
         <div className="md:hidden flex items-center">
@@ -73,9 +118,28 @@ export const Navbar = () => {
                     {item.label}
                   </NavLink>
                 ))}
-                <div className="mt-4 flex gap-3">
-                  <Button variant="outlineHero" className="w-full">Log in</Button>
-                  <Button variant="hero" className="w-full">Sign up</Button>
+                <div className="mt-4 space-y-3">
+                  {currentUser ? (
+                    <div className="space-y-3">
+                      <div className="p-3 rounded-lg bg-muted/20">
+                        <p className="font-medium">{currentUser.displayName || 'User'}</p>
+                        <p className="text-sm text-muted-foreground">{currentUser.email}</p>
+                      </div>
+                      <Button variant="outline" className="w-full" onClick={handleLogout}>
+                        <LogOut className="mr-2 h-4 w-4" />
+                        Sign Out
+                      </Button>
+                    </div>
+                  ) : (
+                    <div className="flex gap-3">
+                      <LoginModal>
+                        <Button variant="outlineHero" className="w-full">Log in</Button>
+                      </LoginModal>
+                      <LoginModal>
+                        <Button variant="hero" className="w-full">Sign up</Button>
+                      </LoginModal>
+                    </div>
+                  )}
                 </div>
               </div>
             </SheetContent>

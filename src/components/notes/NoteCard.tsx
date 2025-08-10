@@ -8,9 +8,13 @@ export type Note = {
   title: string;
   subject: string;
   college: string;
+  level: "Freshman" | "Sophomore" | "Junior" | "Senior" | "Graduate";
   date: string;
   downloads: number;
   rating: number; // 0-5
+  ratingCount?: number;
+  description?: string;
+  uploaderName?: string;
 };
 
 const Stars = ({ rating }: { rating: number }) => (
@@ -30,6 +34,7 @@ const NoteCard = ({ note, onDownload }: { note: Note; onDownload?: (id: string) 
       <CardContent className="space-y-3">
         <div className="flex flex-wrap items-center gap-2">
           <Badge variant="secondary">{note.subject}</Badge>
+          <Badge variant="outline">{note.level}</Badge>
           <span className="inline-flex items-center gap-1 text-sm text-muted-foreground"><School className="h-4 w-4" />{note.college}</span>
         </div>
         <div className="flex items-center justify-between text-sm text-muted-foreground">
