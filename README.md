@@ -96,6 +96,8 @@
 | **Recharts** | Composable charting library |
 | **Sonner** | Toast notifications |
 
+> **Note:** Version numbers are synchronized with `package.json`. When updating dependencies, remember to update the version numbers in this README accordingly.
+
 ---
 
 ## 🏗️ Architecture
@@ -341,7 +343,10 @@ You can also edit this project using [Lovable](https://lovable.dev/projects/3ee5
 
 - Simply visit the Lovable Project and start prompting
 - Changes made via Lovable will be committed automatically to this repo
-- Pull the changes to sync with your local environment
+- Pull the changes to sync with your local environment:
+  ```bash
+  git pull origin main
+  ```
 
 ### Using GitHub Codespaces
 
